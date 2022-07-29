@@ -8,7 +8,7 @@ import java.util.Stack;
 
 public class QQSPanel extends JPanel implements ActionListener {
     static final int SCREEN_HEIGHT = 600;
-    static final int SCREEN_WIDTH = 600;
+    static final int SCREEN_WIDTH = 1000;
     static final int UNIT_SIZE = 15;
     static final int VECTOR_UNITS = SCREEN_WIDTH / UNIT_SIZE;
     static final int DELAY = 160;
@@ -83,14 +83,12 @@ public class QQSPanel extends JPanel implements ActionListener {
     }
 
     public void draw(Graphics g) {
-        if (running) {
-            Graphics2D g2 = (Graphics2D) g;
-            g2.setColor(Color.red);
-            g2.setStroke(new BasicStroke(4));
-            int[] tmp = this.vector;
-            for (int i = 0; i < VECTOR_UNITS - 4; i++) {
-                g2.drawRect(2 * UNIT_SIZE + i * UNIT_SIZE, SCREEN_HEIGHT - tmp[i] - (2 * UNIT_SIZE), UNIT_SIZE, tmp[i]);
-            }
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setColor(Color.red);
+        g2.setStroke(new BasicStroke(4));
+        int[] tmp = this.vector;
+        for (int i = 0; i < VECTOR_UNITS - 4; i++) {
+            g2.drawRect(2 * UNIT_SIZE + i * UNIT_SIZE, SCREEN_HEIGHT - tmp[i] - (2 * UNIT_SIZE), UNIT_SIZE, tmp[i]);
         }
     }
 
@@ -111,7 +109,9 @@ public class QQSPanel extends JPanel implements ActionListener {
     public class MyKeyAdapter extends KeyAdapter {
         @Override
         public void keyPressed(KeyEvent e) {
-
+            if(e.getKeyCode()==0x50){
+                running=!running;
+            }
         }
     }
 }
