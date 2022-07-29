@@ -86,10 +86,18 @@ public class QQSPanel extends JPanel implements ActionListener {
         Graphics2D g2 = (Graphics2D) g;
         g2.setColor(Color.red);
         g2.setStroke(new BasicStroke(4));
-        int[] tmp = this.vector;
+        int tmp = stack.pop();
+        //int[] tmp = this.vector;
         for (int i = 0; i < VECTOR_UNITS - 4; i++) {
-            g2.drawRect(2 * UNIT_SIZE + i * UNIT_SIZE, SCREEN_HEIGHT - tmp[i] - (2 * UNIT_SIZE), UNIT_SIZE, tmp[i]);
+            if(i>=stack.peek() && i<=tmp) {
+                g2.setColor(Color.green);
+            } else {
+                g2.setColor(Color.red);
+            }
+
+            g2.drawRect(2 * UNIT_SIZE + i * UNIT_SIZE, SCREEN_HEIGHT - this.vector[i] - (2 * UNIT_SIZE), UNIT_SIZE, this.vector[i]);
         }
+        stack.push(tmp);
     }
 
     public void paintComponent(Graphics g) {
@@ -102,6 +110,10 @@ public class QQSPanel extends JPanel implements ActionListener {
         
         if(running) {
             quickSort(vector);
+        }
+        if(stack.isEmpty()) {
+            running = false;
+            timer.stop();
         }
         repaint();
     }
